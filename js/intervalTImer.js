@@ -1,6 +1,6 @@
 // intervalTimer.js
 
-import { playHighBeep } from "/metronome.js";
+import { playHighBeep } from "./metronome.js";
 
 let intervalPhase = 1;
 let intervalCount = 0;
