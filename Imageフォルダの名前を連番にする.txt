@@ -1,0 +1,9 @@
+$path = "C:\Users\lingc\Documents\GitHub\slideShow\Image"
+
+$i = 1
+Get-ChildItem "$path\*.jpg" |
+Sort-Object CreationTime |
+ForEach-Object {
+    Rename-Item $_ ("Image$i.jpg")
+    $i++
+}

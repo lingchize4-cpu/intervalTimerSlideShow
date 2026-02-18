@@ -1,0 +1,46 @@
+/** 外枠のスタイル */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: pink;
+}
+/** UI全体スタイル */
+#container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+/** スライドショー部分スタイル */
+#slideshow {
+    width: 100%;
+    height: 100%;
+    /*object-fit: cover; /* 画面最大 */
+    object-fit: contain; /* 画面内に収まる */
+    /**transform-origin: center;*/
+}
+
+/* バー全体 */
+#intervalUI {
+    position: absolute;
+    top: 75%;                 /* ← ここが重要（高さ75%地点） */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 40%;               /* ← 横幅100%じゃない */
+    height: 12px;
+    
+    background: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* 進行バー */
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: rgba(33,150,243,0.85);
+    border-radius: 20px;
+}

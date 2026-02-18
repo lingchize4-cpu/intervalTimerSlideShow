@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="container">
+        <img id="slideshow">
+        <div id="intervalUI">
+            <div id="progressBar"></div>
+        </div>
+    </div>
+    <script type="module">
+        import { startMetronome } from "./js/metronome.js";
+        import { startIntervalTimer } from "./js/intervalTimer.js";
+        import { startSlideshow } from "./js/slideshow.js";
+        /* ===== DOM ===== */
+        const slideshow = document.getElementById("slideshow");
+        const progressBar = document.getElementById("progressBar");
+
+
+        //定数定義
+        const imageCount = 183; /** 現在の画像の全体枚数を設定する　今は183枚です **/
+        const imageFolder = "Image"
+        const minInterval = 3000;
+        const maxInterval = 5000;
+
+        const startBPM = 30;
+
+        const intervalTimer1 = 15;
+        const intervalTimer2 = 15;
+
+        /* ドキュメントクリック時の操作 */
+        document.body.addEventListener("click",()=>{
+            startSlideshow(slideshow, imageCount, imageFolder, minInterval, maxInterval);
+
+            // ② 通常BPMメトロノーム開始
+            startMetronome(startBPM);
+
+            // ③ インターバル開始
+            startIntervalTimer(progressBar, intervalTimer1 * 1000 , intervalTimer2 * 1000);
+        },{once:true});
+    </script>
+</body>
+</html>
