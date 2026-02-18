@@ -44,3 +44,23 @@ html, body {
     background: rgba(33,150,243,0.85);
     border-radius: 20px;
 }
+
+/* UI */
+#controls{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+#toggleUI{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+    padding: 10px 15px;
+    border-radius: 8px;
+}

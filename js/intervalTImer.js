@@ -6,7 +6,7 @@ let intervalPhase = 1;
 let intervalCount = 0;
 let progressTimer = null;
 
-export function startIntervalTimer(progressBar, duration1 = 15000, duration2 = 15000) {
+export function startIntervalTimer(progressBar, duration1 = 15000, duration2 = 15000,onCountUpdate = null) {
 
     function animateBar(duration, callback) {
         let startTime = Date.now();
@@ -34,7 +34,9 @@ export function startIntervalTimer(progressBar, duration1 = 15000, duration2 = 1
         } else {
             intervalPhase = 1;
             intervalCount++;
-            console.log("完了回数:", intervalCount);
+            if (onCountUpdate) {
+                onCountUpdate(intervalCount); // ← ここで通知
+            }
         }
 
         start();

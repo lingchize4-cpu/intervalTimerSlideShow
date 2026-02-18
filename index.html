@@ -8,29 +8,120 @@
 <body>
     <div id="container">
         <img id="slideshow">
+        <button id="toggleUI">
+            ⚙ 設定
+        </button>
+        <div id="controls">
+            <!-- BPM操作 -->
+            <div>
+                <h3>BPM</h3>
+                <button id="bpmDown">−5</button>
+                <span id="bpmDisplay">30</span>
+                <button id="bpmUp">＋5</button>
+            </div>
+            <hr>
+            <!-- インターバル操作 -->
+            <div>
+                <h3>Interval 1 (秒)</h3>
+                <button id="int1Down">−5</button>
+                <span id="int1Display">15</span>
+                <button id="int1Up">＋5</button>
+            </div>
+            <div>
+                <h3>Interval 2 (秒)</h3>
+                <button id="int2Down">−5</button>
+                <span id="int2Display">15</span>
+                <button id="int2Up">＋5</button>
+            </div>
+            <div id="intervalCounter">
+                カウント: <span id="countDisplay">0</span>
+            </div>
+        </div>
         <div id="intervalUI">
             <div id="progressBar"></div>
         </div>
     </div>
     <script type="module">
         import { startMetronome } from "./js/metronome.js";
-        import { startIntervalTimer } from "./js/intervalTImer.js";
-        import { startSlideshow } from "./js/slideShow.js";
+        import { startIntervalTimer } from "./js/intervalTimer.js";
+        import { startSlideshow } from "./js/slideshow.js";
         /* ===== DOM ===== */
         const slideshow = document.getElementById("slideshow");
         const progressBar = document.getElementById("progressBar");
+        const bpmDisplay = document.getElementById("bpmDisplay");
+        const int1Display = document.getElementById("int1Display");
+        const int2Display = document.getElementById("int2Display");
+        const controls = document.getElementById("controls");
+        const toggleUI = document.getElementById("toggleUI");
+        const countDisplay = document.getElementById("countDisplay");
 
-
-        //定数定義
+        /* ===== 定数 ===== */
         const imageCount = 183; /** 現在の画像の全体枚数を設定する　今は183枚です **/
         const imageFolder = "Image"
         const minInterval = 3000;
         const maxInterval = 5000;
 
-        const startBPM = 30;
+        /* ===== 可変値 ===== */
+        let startBPM = 30;
+        let intervalTimer1 = 15;
+        let intervalTimer2 = 15;
+        let isUIVisible = true;
 
-        const intervalTimer1 = 15;
-        const intervalTimer2 = 15;
+        /* ===== 表示更新 ===== */
+        function updateDisplays(){
+            bpmDisplay.textContent = startBPM;
+            int1Display.textContent = intervalTimer1;
+            int2Display.textContent = intervalTimer2;
+        }
+
+        /* ===== BPM操作 ===== */
+        document.getElementById("bpmUp").addEventListener("click",()=>{
+            startBPM += 5;
+            updateDisplays();
+            startMetronome(startBPM);
+        });
+
+        document.getElementById("bpmDown").addEventListener("click",()=>{
+            if(startBPM> 5){
+                startBPM -= 5;
+                updateDisplays();
+                startMetronome(startBPM);
+            }
+        });
+
+        /* ===== Interval1操作 ===== */
+        document.getElementById("int1Up").addEventListener("click",()=>{
+            intervalTimer1 += 5;
+            updateDisplays();
+        });
+
+        document.getElementById("int1Down").addEventListener("click",()=>{
+            if(intervalTimer1 > 5){
+                intervalTimer1 -= 5;
+                updateDisplays();
+            }
+        });
+
+        /* ===== Interval2操作 ===== */
+        document.getElementById("int2Up").addEventListener("click",()=>{
+            intervalTimer2 += 5;
+            updateDisplays();
+        });
+
+        document.getElementById("int2Down").addEventListener("click",()=>{
+            if(intervalTimer2 > 5){
+                intervalTimer2 -= 5;
+                updateDisplays();
+            }
+        });
+
+        toggleUI.addEventListener("click", (e) => {
+            e.stopPropagation(); // bodyクリックと干渉しないように
+
+            isUIVisible = !isUIVisible;
+
+            controls.style.display = isUIVisible ? "block" : "none";
+        });
 
         /* ドキュメントクリック時の操作 */
         document.body.addEventListener("click",()=>{
@@ -40,7 +131,14 @@
             startMetronome(startBPM);
 
             // ③ インターバル開始
-            startIntervalTimer(progressBar, intervalTimer1 * 1000 , intervalTimer2 * 1000);
+            startIntervalTimer(
+                progressBar, 
+                intervalTimer1 * 1000 , 
+                intervalTimer2 * 1000,
+                (count) => {
+                    countDisplay.textContent = count;
+                }
+            );
         },{once:true});
     </script>
 </body>
