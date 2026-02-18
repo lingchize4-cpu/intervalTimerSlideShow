@@ -5,7 +5,7 @@ let BPM = 30;
 let audioCtx = null;
 let bpmVol = 1;
 
-function playBeep(freq = 60, duration = 0.3, volume = bpmVol * 0.35) {
+function playBeep(freq = 60, duration = 0.3, volume = bpmVol) {
     if (!audioCtx) audioCtx = new AudioContext();
 
     const osc = audioCtx.createOscillator();

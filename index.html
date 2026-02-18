@@ -43,7 +43,7 @@
     </div>
     <script type="module">
         import { startMetronome } from "./js/metronome.js";
-        import { startIntervalTimer } from "./js/intervalTimer.js";
+        import { startIntervalTimer, stopIntervalTimer } from "./js/intervalTimer.js";
         import { startSlideshow } from "./js/slideshow.js";
         /* ===== DOM ===== */
         const slideshow = document.getElementById("slideshow");
@@ -93,12 +93,14 @@
         document.getElementById("int1Up").addEventListener("click",()=>{
             intervalTimer1 += 5;
             updateDisplays();
+            restartTimer();
         });
 
         document.getElementById("int1Down").addEventListener("click",()=>{
             if(intervalTimer1 > 5){
                 intervalTimer1 -= 5;
                 updateDisplays();
+                restartTimer();
             }
         });
 
@@ -106,12 +108,14 @@
         document.getElementById("int2Up").addEventListener("click",()=>{
             intervalTimer2 += 5;
             updateDisplays();
+            restartTimer();
         });
 
         document.getElementById("int2Down").addEventListener("click",()=>{
             if(intervalTimer2 > 5){
                 intervalTimer2 -= 5;
                 updateDisplays();
+                restartTimer();
             }
         });
 
@@ -122,6 +126,19 @@
 
             controls.style.display = isUIVisible ? "block" : "none";
         });
+
+        function restartTimer(){
+            stopIntervalTimer();
+
+            startIntervalTimer(
+                progressBar,
+                intervalTimer1 * 1000,
+                intervalTimer2 * 1000,
+                (count) => {
+                    countDisplay.textContent = count;
+                }
+            );
+        }
 
         /* ドキュメントクリック時の操作 */
         document.body.addEventListener("click",()=>{

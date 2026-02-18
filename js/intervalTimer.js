@@ -6,7 +6,16 @@ let intervalPhase = 1;
 let intervalCount = 0;
 let progressTimer = null;
 
+export function stopIntervalTimer() {
+    if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+    }
+}
+
 export function startIntervalTimer(progressBar, duration1 = 15000, duration2 = 15000,onCountUpdate = null) {
+
+    stopIntervalTimer();
 
     function animateBar(duration, callback) {
         let startTime = Date.now();
