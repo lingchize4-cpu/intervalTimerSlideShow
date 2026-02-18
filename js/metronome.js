@@ -3,7 +3,7 @@
 let metroTimer = null;
 let BPM = 30;
 let audioCtx = null;
-let bpmVol = 0.5;
+let bpmVol = 1;
 
 function playBeep(freq = 60, duration = 0.3, volume = bpmVol * 0.35) {
     if (!audioCtx) audioCtx = new AudioContext();
@@ -39,5 +39,5 @@ export function stopMetronome() {
 }
 
 export function playHighBeep() {
-    playBeep(380, 0.5, 0.3);
+    playBeep(380, 0.5, 1);
 }
